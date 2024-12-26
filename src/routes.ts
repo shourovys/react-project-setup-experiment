@@ -30,7 +30,7 @@ export const routes: AppRoute[] = [
     ],
   },
   {
-    element: React.createElement(PrivateRoute, { isAuthenticated: true }),
+    element: React.createElement(PrivateRoute, { isAuthenticated: false }),
     children: [
       {
         path: 'dashboard',
