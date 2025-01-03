@@ -6,8 +6,8 @@ export const routePaths = {
 
   // Protected routes
   dashboard: '/dashboard',
-  settings: '/dashboard/settings',
-  userDetails: (userId: string) => `/dashboard/users/${userId}`,
+  settings: '/settings',
+  userDetails: (userId: string) => `/users/${userId}`,
 
   // Catch-all
   notFound: '*',

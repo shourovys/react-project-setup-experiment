@@ -1,20 +1,19 @@
 import React, { lazy } from 'react';
-import { routePaths } from './routePaths';
-import type { AppRoute } from './routes';
+import type { AppRoute } from '../config';
 
-const DashboardLayout = lazy(() => import('../layouts/DashboardLayout'));
-const Dashboard = lazy(() => import('../pages/Dashboard'));
-const Settings = lazy(() => import('../pages/Settings'));
-const UserDetails = lazy(() => import('../pages/UserDetails'));
+const DashboardLayout = lazy(() => import('../../layouts/DashboardLayout'));
+const Dashboard = lazy(() => import('../../pages/Dashboard'));
+const Settings = lazy(() => import('../../pages/Settings'));
+const UserDetails = lazy(() => import('../../pages/UserDetails'));
 
 export const protectedRoutes: AppRoute[] = [
   {
+    path: '/dashboard',
     element: React.createElement(DashboardLayout),
     auth: true,
-    isLayout: true,
     children: [
       {
-        path: routePaths.dashboard,
+        index: true,
         element: React.createElement(Dashboard),
         title: 'Dashboard',
         breadcrumb: 'Dashboard',
@@ -22,7 +21,7 @@ export const protectedRoutes: AppRoute[] = [
         auth: true,
       },
       {
-        path: routePaths.settings,
+        path: 'settings',
         element: React.createElement(Settings),
         title: 'Settings',
         breadcrumb: 'Settings',
