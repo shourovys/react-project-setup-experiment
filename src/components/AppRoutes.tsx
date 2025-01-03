@@ -1,35 +1,68 @@
-import React, { lazy } from 'react';
+import React, { Suspense } from 'react';
 import { Route, Routes } from 'react-router-dom';
+import { AppRoute, routeConfig, UserRole } from '../routes/config';
+import RoleBasedRoute from './RoleBasedRoute';
 
-// Lazy load components
-const Home = lazy(() => import('../pages/Home'));
-const About = lazy(() => import('../pages/About'));
-const Dashboard = lazy(() => import('../pages/Dashboard'));
-const UserDetails = lazy(() => import('../pages/UserDetails'));
-const Settings = lazy(() => import('../pages/Settings'));
-const NotFound = lazy(() => import('../pages/NotFound'));
-const PublicLayout = lazy(() => import('../layouts/PublicLayout'));
-const DashboardLayout = lazy(() => import('../layouts/DashboardLayout'));
-const PrivateRoute = lazy(() => import('./PrivateRoute'));
+// Mock authentication state - replace with your actual auth logic
+const isAuthenticated = true;
+const userRoles: UserRole[] = ['user'];
 
 const AppRoutes: React.FC = () => {
-  return (
-    <Routes>
-      <Route element={<PublicLayout />}>
-        <Route index element={<Home />} />
-        <Route path='about' element={<About />} />
-      </Route>
+  const renderRoutes = (routes: AppRoute[]) => {
+    return routes.map((route) => {
+      if (route.auth) {
+        return (
+          <Route
+            path={route.path}
+            element={
+              <RoleBasedRoute
+                isAuthenticated={isAuthenticated}
+                userRoles={userRoles}
+                allowedRoles={route.roles || []}
+              >
+                <Suspense fallback={<div>Loading...</div>}>
+                  {route.element}
+                </Suspense>
+              </RoleBasedRoute>
+            }
+          >
+            {route.children && renderRoutes(route.children)}
+          </Route>
+        );
+      }
 
-      <Route element={<PrivateRoute isAuthenticated={true} />}>
-        <Route path='dashboard' element={<DashboardLayout />}>
-          <Route index element={<Dashboard />} />
-          <Route path='settings' element={<Settings />} />
-          <Route path='users/:userId' element={<UserDetails />} />
+      if (route.index) {
+        return (
+          <Route
+            index
+            element={
+              <Suspense fallback={<div>Loading...</div>}>
+                {route.element}
+              </Suspense>
+            }
+          />
+        );
+      }
+
+      return (
+        <Route
+          path={route.path}
+          element={
+            <Suspense fallback={<div>Loading...</div>}>
+              {route.element}
+            </Suspense>
+          }
+        >
+          {route.children && renderRoutes(route.children)}
         </Route>
-      </Route>
+      );
+    });
+  };
 
-      <Route path='*' element={<NotFound />} />
-    </Routes>
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <Routes>{renderRoutes(routeConfig)}</Routes>
+    </Suspense>
   );
 };
 

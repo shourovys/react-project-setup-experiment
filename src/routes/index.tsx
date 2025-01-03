@@ -1,16 +1,16 @@
-import React, { lazy, Suspense } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import React, { Suspense } from 'react';
+import { RouteObject, useRoutes } from 'react-router-dom';
+import { routeConfig } from './config';
 
-// Lazy load components
-const Home = lazy(() => import('../pages/Home'));
-const About = lazy(() => import('../pages/About'));
-const Dashboard = lazy(() => import('../pages/Dashboard'));
-const UserDetails = lazy(() => import('../pages/UserDetails'));
-const Settings = lazy(() => import('../pages/Settings'));
-const NotFound = lazy(() => import('../pages/NotFound'));
-const PublicLayout = lazy(() => import('../layouts/PublicLayout'));
-const DashboardLayout = lazy(() => import('../layouts/DashboardLayout'));
-const PrivateRoute = lazy(() => import('../components/PrivateRoute'));
+// Loading Component
+const LoadingFallback = () => (
+  <div className='min-h-screen flex items-center justify-center bg-gray-50'>
+    <div className='text-center'>
+      <div className='animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600 mx-auto' />
+      <p className='mt-4 text-gray-600'>Loading...</p>
+    </div>
+  </div>
+);
 
 // Error Boundary Component
 const ErrorBoundary: React.FC<{ children: React.ReactNode }> = ({
@@ -53,39 +53,14 @@ const ErrorBoundary: React.FC<{ children: React.ReactNode }> = ({
   return <>{children}</>;
 };
 
-// Loading Component
-const LoadingFallback = () => (
-  <div className='min-h-screen flex items-center justify-center bg-gray-50'>
-    <div className='text-center'>
-      <div className='animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600 mx-auto'></div>
-      <p className='mt-4 text-gray-600'>Loading...</p>
-    </div>
-  </div>
-);
+function AppRouter() {
+  const routing = useRoutes(routeConfig as RouteObject[]);
 
-const AppRoutes: React.FC = () => {
   return (
     <ErrorBoundary>
-      <Suspense fallback={<LoadingFallback />}>
-        <Routes>
-          <Route element={<PublicLayout />}>
-            <Route index element={<Home />} />
-            <Route path='about' element={<About />} />
-          </Route>
-
-          <Route element={<PrivateRoute isAuthenticated={true} />}>
-            <Route path='dashboard' element={<DashboardLayout />}>
-              <Route index element={<Dashboard />} />
-              <Route path='settings' element={<Settings />} />
-              <Route path='users/:userId' element={<UserDetails />} />
-            </Route>
-          </Route>
-
-          <Route path='*' element={<NotFound />} />
-        </Routes>
-      </Suspense>
+      <Suspense fallback={<LoadingFallback />}>{routing}</Suspense>
     </ErrorBoundary>
   );
-};
+}
 
-export default AppRoutes;
+export default AppRouter;
