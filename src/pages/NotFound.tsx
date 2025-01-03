@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import PageLayout from '../components/PageLayout';
-import { routePaths } from '../routePaths';
+import { routePaths } from '../routes/routePaths';
 
 const NotFound: React.FC = () => {
   return (

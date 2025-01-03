@@ -1,7 +1,4 @@
 import React, { lazy } from 'react';
-import type { RouteObject } from 'react-router-dom';
-import { protectedRoutes } from './protected';
-import { publicRoutes } from './public';
 
 const PublicLayout = lazy(() => import('../layouts/PublicLayout'));
 const DashboardLayout = lazy(() => import('../layouts/DashboardLayout'));
@@ -13,23 +10,29 @@ const UserDetails = lazy(() => import('../pages/UserDetails'));
 const NotFound = lazy(() => import('../pages/NotFound'));
 // const Unauthorized = lazy(() => import('../pages/Unauthorized'));
 
-export type UserRole = 'admin' | 'user' | 'manager';
-
-export interface AppRoute extends Omit<RouteObject, 'children'> {
-  title?: string;
-  breadcrumb?: string;
-  auth?: boolean;
-  roles?: UserRole[];
-  children?: AppRoute[];
-}
-
-export const routeConfig: AppRoute[] = [
-  ...publicRoutes,
-  ...protectedRoutes,
+export const publicRoutes: AppRoute[] = [
   {
-    path: '*',
-    element: React.createElement(NotFound),
-    title: 'Not Found',
-    breadcrumb: 'Not Found',
+    path: '/',
+    element: React.createElement(PublicLayout),
+    children: [
+      {
+        index: true,
+        element: React.createElement(Home),
+        title: 'Home',
+        breadcrumb: 'Home',
+      },
+      {
+        path: 'about',
+        element: React.createElement(About),
+        title: 'About',
+        breadcrumb: 'About',
+      },
+      {
+        path: 'unauthorized',
+        element: React.createElement(About),
+        title: 'Unauthorized',
+        breadcrumb: 'Unauthorized',
+      },
+    ],
   },
 ];
