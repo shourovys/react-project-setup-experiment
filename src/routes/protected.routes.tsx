@@ -1,4 +1,5 @@
 import React, { lazy } from 'react';
+import { routePaths } from './routePaths';
 import type { AppRoute } from './routes';
 
 const DashboardLayout = lazy(() => import('../layouts/DashboardLayout'));
@@ -8,7 +9,7 @@ const UserDetails = lazy(() => import('../pages/UserDetails'));
 
 export const protectedRoutes: AppRoute[] = [
   {
-    path: '/dashboard',
+    path: routePaths.dashboard,
     element: React.createElement(DashboardLayout),
     auth: true,
     children: [

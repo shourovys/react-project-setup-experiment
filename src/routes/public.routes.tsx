@@ -1,4 +1,5 @@
 import React, { lazy } from 'react';
+import { routePaths } from './routePaths';
 import type { AppRoute } from './routes';
 
 const PublicLayout = lazy(() => import('../layouts/PublicLayout'));
@@ -8,7 +9,7 @@ const Unauthorized = lazy(() => import('../pages/Unauthorized'));
 
 export const publicRoutes: AppRoute[] = [
   {
-    path: '/',
+    path: routePaths.home,
     element: React.createElement(PublicLayout),
     children: [
       {

@@ -2,6 +2,7 @@ import React, { lazy } from 'react';
 import type { RouteObject } from 'react-router-dom';
 import { protectedRoutes } from './protected.routes';
 import { publicRoutes } from './public.routes';
+import { routePaths } from './routePaths';
 
 const NotFound = lazy(() => import('../pages/NotFound'));
 
@@ -19,7 +20,7 @@ export const routeConfig: AppRoute[] = [
   ...publicRoutes,
   ...protectedRoutes,
   {
-    path: '*',
+    path: routePaths.notFound,
     element: React.createElement(NotFound),
     title: 'Not Found',
     breadcrumb: 'Not Found',

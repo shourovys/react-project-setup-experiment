@@ -24,7 +24,7 @@ interface UseAuth extends AuthState {
 export function useAuth(): UseAuth {
   const [authState, setAuthState] = useState<AuthState>(() => ({
     isAuthenticated: true,
-    userRoles: ['user'],
+    userRoles: ['admin', 'user', 'manager'],
     user: {
       id: '1',
       name: 'John Doe',
