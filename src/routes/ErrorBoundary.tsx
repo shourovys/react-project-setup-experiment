@@ -1,8 +1,13 @@
 import React from 'react';
 
-// Error Boundary Component
-const ErrorBoundary: React.FC<{ children: React.ReactNode }> = ({
+interface ErrorBoundaryProps {
+  children: React.ReactNode;
+  fallback?: React.ReactNode;
+}
+
+const ErrorBoundary: React.FC<ErrorBoundaryProps> = ({
   children,
+  fallback,
 }) => {
   const [hasError, setHasError] = React.useState(false);
   const [error, setError] = React.useState<Error | null>(null);
@@ -18,6 +23,10 @@ const ErrorBoundary: React.FC<{ children: React.ReactNode }> = ({
   }, []);
 
   if (hasError) {
+    if (fallback) {
+      return <>{fallback}</>;
+    }
+
     return (
       <div className='min-h-screen flex items-center justify-center bg-red-50'>
         <div className='text-center'>
