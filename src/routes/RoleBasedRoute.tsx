@@ -1,6 +1,6 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
-import type { UserRole } from '../routes/config';
+import type { UserRole } from './routes';
 
 interface RoleBasedRouteProps {
   isAuthenticated: boolean;
@@ -15,11 +15,17 @@ const RoleBasedRoute: React.FC<RoleBasedRouteProps> = ({
   allowedRoles,
   children,
 }) => {
-  const hasRequiredRole = userRoles.some((role) => allowedRoles.includes(role));
-
   if (!isAuthenticated) {
-    return <Navigate to='/' replace />;
+    return <Navigate to='/unauthorized' replace />;
   }
+
+  // If no roles are specified, allow access to authenticated users
+  if (allowedRoles.length === 0) {
+    return <>{children}</>;
+  }
+
+  // Check if user has any of the required roles
+  const hasRequiredRole = userRoles.some((role) => allowedRoles.includes(role));
 
   if (!hasRequiredRole) {
     return <Navigate to='/unauthorized' replace />;

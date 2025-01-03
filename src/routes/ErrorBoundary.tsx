@@ -1,16 +1,4 @@
-import React, { Suspense } from 'react';
-import { RouteObject, useRoutes } from 'react-router-dom';
-import { routeConfig } from './config';
-
-// Loading Component
-const LoadingFallback = () => (
-  <div className='min-h-screen flex items-center justify-center bg-gray-50'>
-    <div className='text-center'>
-      <div className='animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600 mx-auto' />
-      <p className='mt-4 text-gray-600'>Loading...</p>
-    </div>
-  </div>
-);
+import React from 'react';
 
 // Error Boundary Component
 const ErrorBoundary: React.FC<{ children: React.ReactNode }> = ({
@@ -53,14 +41,4 @@ const ErrorBoundary: React.FC<{ children: React.ReactNode }> = ({
   return <>{children}</>;
 };
 
-function AppRouter() {
-  const routing = useRoutes(routeConfig as RouteObject[]);
-
-  return (
-    <ErrorBoundary>
-      <Suspense fallback={<LoadingFallback />}>{routing}</Suspense>
-    </ErrorBoundary>
-  );
-}
-
-export default AppRouter;
+export default ErrorBoundary;

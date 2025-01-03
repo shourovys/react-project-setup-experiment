@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
-import { routeConfig } from '../config';
+import { routeConfig } from '../routes';
 
 interface Breadcrumb {
   path: string;
