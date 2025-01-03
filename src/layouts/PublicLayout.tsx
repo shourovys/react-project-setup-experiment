@@ -21,6 +21,26 @@ const PublicLayout: React.FC = () => {
               >
                 About
               </Link>
+              <Link
+                to={routePaths.concerts}
+                className='text-gray-900 hover:text-gray-600 px-3 py-2 rounded-md text-sm font-medium'
+              >
+                Concerts
+              </Link>
+            </div>
+            <div className='flex space-x-4'>
+              <Link
+                to={routePaths.login}
+                className='text-gray-900 hover:text-gray-600 px-3 py-2 rounded-md text-sm font-medium'
+              >
+                Login
+              </Link>
+              <Link
+                to={routePaths.register}
+                className='bg-blue-600 text-white hover:bg-blue-700 px-3 py-2 rounded-md text-sm font-medium'
+              >
+                Register
+              </Link>
             </div>
           </div>
         </nav>

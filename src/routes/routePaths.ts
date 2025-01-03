@@ -3,6 +3,14 @@ export const routePaths = {
   home: '/',
   about: '/about',
   unauthorized: '/unauthorized',
+  login: '/login',
+  register: '/register',
+
+  // Concert routes
+  concerts: '/concerts',
+  concertsHome: '/concerts',
+  trending: '/concerts/trending',
+  city: '/concerts/city/:cityId',
 
   // Protected routes
   dashboard: '/dashboard',
