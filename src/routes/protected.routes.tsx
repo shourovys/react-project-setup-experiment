@@ -9,12 +9,12 @@ const UserDetails = lazy(() => import('../pages/UserDetails'));
 
 export const protectedRoutes: AppRoute[] = [
   {
+    path: routePaths.dashboard,
     element: React.createElement(DashboardLayout),
     auth: true,
-    isLayout: true,
     children: [
       {
-        path: routePaths.dashboard,
+        index: true,
         element: React.createElement(Dashboard),
         title: 'Dashboard',
         breadcrumb: 'Dashboard',
@@ -22,7 +22,7 @@ export const protectedRoutes: AppRoute[] = [
         auth: true,
       },
       {
-        path: routePaths.settings,
+        path: 'settings',
         element: React.createElement(Settings),
         title: 'Settings',
         breadcrumb: 'Settings',

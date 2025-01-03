@@ -14,8 +14,8 @@ export const routePaths = {
 
   // Protected routes
   dashboard: '/dashboard',
-  settings: '/settings',
-  userDetails: (userId: string) => `/users/${userId}`,
+  settings: '/dashboard/settings',
+  userDetails: (userId: string) => `/dashboard/users/${userId}`,
 
   // Catch-all
   notFound: '*',
